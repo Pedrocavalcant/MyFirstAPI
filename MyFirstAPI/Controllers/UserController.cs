@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyFirstAPI.Communication.Requests;
+using MyFirstAPI.Communication.Responses;
 
 namespace MyFirstAPI.Controllers;
 
@@ -19,5 +21,24 @@ public class UserController : ControllerBase
             Name = "Pedro",
         };
         return Ok(response);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ResponseRegisteredUser), StatusCodes.Status201Created)]
+    public IActionResult Post([FromBody] RequestRegisterUserJson request)
+    {
+        var response = new ResponseRegisteredUser
+        {
+            Id = 1,
+            Name = request.Name,
+        };
+        return Created(string.Empty, response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType( StatusCodes.Status204NoContent)]
+    public IActionResult Put()
+    {
+        return NoContent();
     }
 }
